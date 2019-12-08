@@ -1,5 +1,13 @@
 .App {
-  text-align: center;
+}
+
+.header {
+  font-size: 30px;
+}
+
+a {
+  text-decoration: none;
+  
 }
 
 .App-header {
@@ -10,8 +18,4 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
-}
-
-a {
-  color: #09d3ac;
 }
