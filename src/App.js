@@ -9,7 +9,7 @@ class App extends Component {
   state = {
     books: [],
     book: {
-      name: "asdf",
+      title: "asdf",
       ISBN: 12341523477
     }
   };
@@ -25,17 +25,12 @@ class App extends Component {
       .catch(err => console.error(err));
   };
 
-  addBookToCart = _ => {
-    const { book } = this.state;
+  addBookToCart(book) {
     fetch(
-      `https://bookstore-server-t12.herokuapp.com/carts/add?AccountID=170693&cartID=1&Book=${book.name}&ISBN=${book.ISBN}&Cart_Quantity=1`
+      `https://bookstore-server-t12.herokuapp.com/carts/add?AccountID=170693&cartID=1&Book=${book.title}&ISBN=${book.ISBN}&Cart_Quantity=1`
     )
       .then(console.log(book))
       .catch(err => console.error(err));
-  };
-
-  onClickFn(idk) {
-    console.log(idk);
   }
 
   renderBooks = ({ ISBN, title, Authors, Publisher, price, edition }) => (
@@ -44,7 +39,7 @@ class App extends Component {
         <Card.Body>
           <Card.Title>
             {title}, {edition} Edition
-        </Card.Title>
+          </Card.Title>
           <Card.Text>
             <b>Author: </b>
             {Authors} <br />
@@ -60,11 +55,11 @@ class App extends Component {
               <b>${price}</b>
             </span>
             <Button
-              onClick={this.onClickFn(this.state.book)}
+              onClick={this.addBookToCart.bind(this, { ISBN, title })}
               variant="info"
             >
               Add to cart
-          </Button>
+            </Button>
           </div>
         </Card.Footer>
       </Card>
