@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Card, { CardSubtitle } from "react-bootstrap/Card";
-import Button from "react-bootstrap/button";
+import Button from "react-bootstrap/Button";
 
 class Cart extends Component {
   state = {
