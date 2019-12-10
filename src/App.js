@@ -28,9 +28,7 @@ class App extends Component {
   addBookToCart(book) {
     fetch(
       `https://bookstore-server-t12.herokuapp.com/carts/add?AccountID=170693&cartID=1&Book=${book.title}&ISBN=${book.ISBN}&Cart_Quantity=1`
-    )
-      .then(console.log(book))
-      .catch(err => console.error(err));
+    ).catch(err => console.error(err));
   }
 
   renderBooks = ({ ISBN, title, Authors, Publisher, price, edition }) => (

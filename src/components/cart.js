@@ -34,6 +34,22 @@ class Cart extends Component {
       .catch(err => console.error(err));
   };
 
+  updateCartAdd(ISBN) {
+    fetch(
+      `https://bookstore-server-t12.herokuapp.com/carts/update/add?ISBN=${ISBN}`
+    )
+      .then(() => window.location.reload(true))
+      .catch(err => console.error(err));
+  }
+
+  updateCartDelete(ISBN) {
+    fetch(
+      `https://bookstore-server-t12.herokuapp.com/carts/update/delete?ISBN=${ISBN}`
+    )
+      .then(() => window.location.reload(true))
+      .catch(err => console.error(err));
+  }
+
   renderCart = ({ Book, ISBN, Cart_Quantity }) => (
     <div key={ISBN}>
       <b>Book: </b>
@@ -42,7 +58,17 @@ class Cart extends Component {
       {ISBN} <br />
       <b>Quantity: </b>
       {Cart_Quantity} <br />
-      <br />
+      <Button onClick={this.updateCartAdd.bind(this, ISBN)} variant="success">
+        +
+      </Button>
+      {Cart_Quantity > 0 && (
+        <Button
+          onClick={this.updateCartDelete.bind(this, ISBN)}
+          variant="warning"
+        >
+          -
+        </Button>
+      )}
     </div>
   );
 
