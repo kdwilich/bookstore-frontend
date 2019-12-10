@@ -105,6 +105,9 @@ class Cart extends Component {
         <a href="/" style={{ textDecoration: "none", fontSize: "25px" }}>
           Back
         </a>
+        <a href="/checkout" style={{ textDecoration: "none", fontSize: "25px" }}>
+          Checkout
+        </a>
         <Button onClick={this.deleteCart} variant="danger">
           Delete Contents
         </Button>
