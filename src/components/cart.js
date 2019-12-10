@@ -29,17 +29,24 @@ class Cart extends Component {
   };
 
   getPriceIndividual(ISBN) {
-    let price = 0;
-    fetch(`http://localhost:4000/carts/price?ISBN=${ISBN}`)
+    fetch(`https://bookstore-server-t12.herokuapp.com/carts/price?ISBN=${ISBN}`)
       .then(response => response.json())
+      .then(response => this.setState({ price: response.data }))
       .catch(err => console.error(err));
-    return <span>{price}</span>;
+    return <span>{this.state.price}</span>;
   }
 
   deleteCart = _ => {
     fetch("https://bookstore-server-t12.herokuapp.com/carts/delete/all")
       .then(response => response.json())
       .then(response => this.setState({ cart: response.data, total: 0 }))
+      .catch(err => console.error(err));
+  };
+
+  completePurchase = _ => {
+    fetch("https://bookstore-server-t12.herokuapp.com/cart/checkout")
+      .then(response => response.json())
+      .then(this.deleteCart)
       .catch(err => console.error(err));
   };
 
@@ -65,8 +72,8 @@ class Cart extends Component {
       {Book} <br />
       <b>ISBN: </b>
       {ISBN} <br />
-      <b>Price: </b>${this.getPriceIndividual(ISBN)}
-      <br />
+      {/* <b>Price: </b>${this.getPriceIndividual(ISBN)}
+      <br /> */}
       <b>Quantity: </b>
       {Cart_Quantity} <br />
       <Button onClick={this.updateCartAdd.bind(this, ISBN)} variant="success">
@@ -100,6 +107,10 @@ class Cart extends Component {
         </a>
         <Button onClick={this.deleteCart} variant="danger">
           Delete Contents
+        </Button>
+
+        <Button onClick={this.completePurchase} variant="success">
+          Checkout
         </Button>
         {cart.length !== undefined && <div>{cart.map(this.renderCart)}</div>}
         {this.renderTotal(total)}

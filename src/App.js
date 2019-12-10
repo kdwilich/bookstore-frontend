@@ -31,7 +31,7 @@ class App extends Component {
     ).catch(err => console.error(err));
   }
 
-  renderBooks = ({ ISBN, title, Authors, Publisher, price, edition }) => (
+  renderBooks = ({ ISBN, title, Authors, Publisher, price, edition, Stock }) => (
     <div key={ISBN}>
       <Card className="m-2" style={{ width: "18rem" }}>
         <Card.Body>
@@ -45,6 +45,8 @@ class App extends Component {
             {Publisher} <br />
             <b>ISBN: </b>
             {ISBN} <br />
+            <b>Stock: </b>
+            {Stock} <br />
           </Card.Text>
         </Card.Body>
         <Card.Footer>
