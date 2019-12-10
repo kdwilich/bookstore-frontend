@@ -5,7 +5,8 @@ import Button from "react-bootstrap/Button";
 class Cart extends Component {
   state = {
     cart: [],
-    total: 0
+    total: 0,
+    price: 0
   };
 
   componentDidMount() {
@@ -23,9 +24,17 @@ class Cart extends Component {
   getPriceTotal = _ => {
     fetch("https://bookstore-server-t12.herokuapp.com/carts/total_price")
       .then(response => response.json())
-      .then(response => this.setState({ total: response.data[0].total || 0 }))
+      .then(response => this.setState({ total: response.data[0].Total || 0 }))
       .catch(err => console.error(err));
   };
+
+  getPriceIndividual(ISBN) {
+    let price = 0;
+    fetch(`http://localhost:4000/carts/price?ISBN=${ISBN}`)
+      .then(response => response.json())
+      .catch(err => console.error(err));
+    return <span>{price}</span>;
+  }
 
   deleteCart = _ => {
     fetch("https://bookstore-server-t12.herokuapp.com/carts/delete/all")
@@ -56,6 +65,8 @@ class Cart extends Component {
       {Book} <br />
       <b>ISBN: </b>
       {ISBN} <br />
+      <b>Price: </b>${this.getPriceIndividual(ISBN)}
+      <br />
       <b>Quantity: </b>
       {Cart_Quantity} <br />
       <Button onClick={this.updateCartAdd.bind(this, ISBN)} variant="success">
@@ -73,7 +84,6 @@ class Cart extends Component {
   );
 
   renderTotal(total) {
-    console.log(total);
     return (
       <div>
         <b>Total: </b> ${total}
