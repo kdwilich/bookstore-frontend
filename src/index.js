@@ -1,9 +1,8 @@
-import React from "react";
+import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import { Route, Link, BrowserRouter as Router, Switch } from "react-router-dom";
 import "./index.css";
 import App from "./App";
-import Counters from "./components/counters";
 import Cart from "./components/cart";
 import Checkout from "./components/checkout";
 import NotFound from "./components/notfound";

@@ -31,9 +31,17 @@ class App extends Component {
     ).catch(err => console.error(err));
   }
 
-  renderBooks = ({ ISBN, title, Authors, Publisher, price, edition, Stock }) => (
+  renderBooks = ({
+    ISBN,
+    title,
+    Authors,
+    Publisher,
+    price,
+    edition,
+    Stock
+  }) => (
     <div key={ISBN}>
-      <Card className="m-2" style={{ width: "18rem" }}>
+      <Card bg="dark" className="m-2" style={{ width: "18rem" }}>
         <Card.Body>
           <Card.Title>
             {title}, {edition} Edition
@@ -67,9 +75,10 @@ class App extends Component {
   );
 
   render() {
+    document.body.style = "background: #343A40";
     const { books } = this.state;
     return (
-      <div className="p-3 d-flex flex-column">
+      <div className="p-3 d-flex flex-column bg-dark text-white">
         <div className="d-flex justify-content-between">
           <div className="header">Bookstore</div>
           <a href="cart" style={{ textDecoration: "none", fontSize: "25px" }}>

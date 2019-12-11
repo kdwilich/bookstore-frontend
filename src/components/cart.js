@@ -1,6 +1,8 @@
 import React, { Component } from "react";
-import Card, { CardSubtitle } from "react-bootstrap/Card";
+import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
+import Breadcrumb from "react-bootstrap/Breadcrumb";
+import { Link } from "react-router-dom";
 
 class Cart extends Component {
   state = {
@@ -58,65 +60,105 @@ class Cart extends Component {
       .catch(err => console.error(err));
   }
 
-  updateCartDelete(ISBN) {
-    fetch(
-      `https://bookstore-server-t12.herokuapp.com/carts/update/delete?ISBN=${ISBN}`
-    )
-      .then(() => window.location.reload(true))
-      .catch(err => console.error(err));
+  updateCartDelete(cart) {
+    cart.Cart_Quantity > 0
+      ? fetch(
+          `https://bookstore-server-t12.herokuapp.com/carts/update/delete?ISBN=${cart.ISBN}`
+        )
+          .then(() => window.location.reload(true))
+          .catch(err => console.error(err))
+      : fetch(
+          `https://bookstore-server-t12.herokuapp.com/carts/update/remove?ISBN=${cart.ISBN}`
+        )
+          .then(() => window.location.reload(true))
+          .catch(err => console.error(err));
   }
 
   renderCart = ({ Book, ISBN, Cart_Quantity }) => (
     <div key={ISBN}>
-      <b>Book: </b>
-      {Book} <br />
-      <b>ISBN: </b>
-      {ISBN} <br />
-      {/* <b>Price: </b>${this.getPriceIndividual(ISBN)}
-      <br /> */}
-      <b>Quantity: </b>
-      {Cart_Quantity} <br />
-      <Button onClick={this.updateCartAdd.bind(this, ISBN)} variant="success">
-        +
-      </Button>
-      {Cart_Quantity > 0 && (
-        <Button
-          onClick={this.updateCartDelete.bind(this, ISBN)}
-          variant="warning"
-        >
-          -
-        </Button>
-      )}
+      <Card bg="dark" className="py-1">
+        <Card.Body variant="dark">
+          <b>Book: </b> {Book} <br />
+          <b>ISBN: </b> {ISBN} <br />
+          <b>Quantity: </b> {Cart_Quantity} &nbsp;
+          <Button
+            size="sm"
+            onClick={this.updateCartAdd.bind(this, ISBN)}
+            variant="success"
+          >
+            +
+          </Button>
+          &nbsp;
+          {(Cart_Quantity > 0 && (
+            <Button
+              size="sm"
+              onClick={this.updateCartDelete.bind(this, {
+                ISBN,
+                Cart_Quantity
+              })}
+              variant="danger"
+            >
+              -
+            </Button>
+          )) || (
+            <Button
+              size="sm"
+              onClick={this.updateCartDelete.bind(this, {
+                ISBN,
+                Cart_Quantity
+              })}
+              variant="danger"
+            >
+              Remove
+            </Button>
+          )}
+        </Card.Body>
+      </Card>
     </div>
   );
 
   renderTotal(total) {
     return (
-      <div>
+      <span style={{ fontSize: 20 }}>
         <b>Total: </b> ${total}
-      </div>
+      </span>
     );
   }
 
   render() {
+    document.body.style = "background: #343A40";
     const { cart, total } = this.state;
     return (
-      <div>
-        <a href="/" style={{ textDecoration: "none", fontSize: "25px" }}>
-          Back
-        </a>
-        <a href="/checkout" style={{ textDecoration: "none", fontSize: "25px" }}>
-          Checkout
-        </a>
-        <Button onClick={this.deleteCart} variant="danger">
-          Delete Contents
-        </Button>
-
-        <Button onClick={this.completePurchase} variant="success">
-          Checkout
-        </Button>
-        {cart.length !== undefined && <div>{cart.map(this.renderCart)}</div>}
-        {this.renderTotal(total)}
+      <div className="bg-dark text-white">
+        <Breadcrumb>
+          <Breadcrumb.Item href="/">Home</Breadcrumb.Item>
+          <Breadcrumb.Item active>Cart</Breadcrumb.Item>
+        </Breadcrumb>
+        <div className="d-flex justify-content-center">
+          <Card bg="dark" className="m-2 w-75" style={{ maxWidth: 700 }}>
+            <Card.Body className="d-flex">
+              {cart.length !== undefined && (
+                <div>{cart.map(this.renderCart)}</div>
+              )}
+            </Card.Body>
+            <Card.Footer className="px-4 d-flex justify-content-between">
+              <span className="d-flex align-items-center">
+                {this.renderTotal(total)}
+              </span>
+              {/* <Button className="m-3" onClick={this.deleteCart} variant="danger">
+              Delete Contents
+            </Button> */}
+              {console.log(cart.length === 0)}
+              {cart.length !== 0 && (
+                <Link to="/checkout">
+                  <Button className="m-3" variant="success">
+                    Checkout
+                  </Button>
+                </Link>
+              )}
+            </Card.Footer>
+          </Card>
+        </div>
       </div>
     );
   }
