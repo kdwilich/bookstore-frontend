@@ -4,6 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import cart_img from "./assets/images/cart.png";
+import Link from "react-router-dom/Link";
 
 class App extends Component {
   state = {
@@ -81,10 +82,9 @@ class App extends Component {
       <div className="p-3 d-flex flex-column bg-dark text-white">
         <div className="d-flex justify-content-between">
           <div className="header">Bookstore</div>
-          <a href="cart" style={{ textDecoration: "none", fontSize: "25px" }}>
-            Cart
-            <img width="25px" height="25px" src={cart_img} />
-          </a>
+          <Link to="/cart">
+            <Button variant="info">Cart</Button>
+          </Link>
         </div>
         {/* <div className="d-flex flex-wrap">{books.map(this.renderBooks)}</div> */}
         <div className="d-flex flex-wrap">{books.map(this.renderBooks)}</div>

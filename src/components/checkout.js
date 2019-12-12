@@ -8,17 +8,6 @@ import { Link } from "react-router-dom";
 // PID, OID, Bstreet, Bcity, Bstate, Bzip, card_info
 // AccountID, Total, Cname, Ship_addr, Bill_addr, PID, Date_placed, status, Book_title, ISBN
 class Checkout extends Component {
-  componentDidMount() {
-    // this.getOrders();
-  }
-
-  getOrders = _ => {
-    fetch("http://localhost:4000/orders")
-      .then(response => response.json())
-      .then(response => this.setState({ orders: response.data }))
-      .catch(err => console.error(err));
-  };
-
   completePurchase = _ => {
     fetch("https://bookstore-server-t12.herokuapp.com/cart/checkout")
       .then(response => response.json())
@@ -87,16 +76,23 @@ class Checkout extends Component {
                   <Form.Control />
                 </Form.Group>
               </Form.Row>
-
-              <Link to="/">
-                <Button
-                  className="m-3"
-                  variant="primary"
-                  onClick={this.completePurchase}
-                >
-                  Checkout
-                </Button>
-              </Link>
+              <Form.Row className="d-flex justify-content-between">
+                <Form.Group>
+                  <Form.Label>Payment Information</Form.Label>
+                  <Form.Control />
+                </Form.Group>
+                <div className="d-flex">
+                  <Link to="/">
+                    <Button
+                      className=""
+                      variant="primary"
+                      onClick={this.completePurchase}
+                    >
+                      Checkout
+                    </Button>
+                  </Link>
+                </div>
+              </Form.Row>
             </Form>
           </Card.Body>
         </Card>

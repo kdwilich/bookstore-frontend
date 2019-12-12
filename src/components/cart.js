@@ -137,8 +137,12 @@ class Cart extends Component {
         <div className="d-flex justify-content-center">
           <Card bg="dark" className="m-2 w-75" style={{ maxWidth: 700 }}>
             <Card.Body className="d-flex">
-              {cart.length !== undefined && (
+              {(cart.length !== 0 && (
                 <div>{cart.map(this.renderCart)}</div>
+              )) || (
+                <div>
+                  <i>Your cart is empty</i>
+                </div>
               )}
             </Card.Body>
             <Card.Footer className="px-4 d-flex justify-content-between">

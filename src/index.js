@@ -5,20 +5,20 @@ import "./index.css";
 import App from "./App";
 import Cart from "./components/cart";
 import Checkout from "./components/checkout";
+import Login from "./components/login";
 import NotFound from "./components/notfound";
 import * as serviceWorker from "./serviceWorker";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const routing = (
   <Router>
-    <div>
-      <Switch>
-        <Route exact path="/" component={App} />
-        <Route path="/cart" component={Cart} />
-        <Route path="/checkout" component={Checkout} />
-        <Route component={NotFound} />
-      </Switch>
-    </div>
+    <Switch>
+      <Route exact path="/" component={App} />
+      <Route path="/cart" component={Cart} />
+      <Route path="/checkout" component={Checkout} />
+      <Route path="/login" component={Login} />
+      <Route component={NotFound} />
+    </Switch>
   </Router>
 );
 
